@@ -1,0 +1,15 @@
+{
+  "name": "frases-app",
+  "version": "1.0.0",
+  "description": "íbis — app para guardar e grifar frases marcantes",
+  "private": true,
+  "scripts": {
+    "dev": "concurrently -n backend,frontend -c magenta,cyan -k \"npm run dev --prefix backend\" \"npm run dev --prefix frontend\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "concurrently": "^9.2.1"
+  }
+}
