@@ -11,12 +11,6 @@ O íbis é um lugar pra guardar frases com cuidado — com reflexão, com contex
 
 O nome vem de Thoth, o deus egípcio da escrita, cuja representação terrena era o íbis.
 
----
-
-Algumas frases você lê. Outras te leem.
-
----
-
 ## O que dá pra fazer
 
 - Salvar frases com autor, fonte e uma reflexão pessoal
@@ -71,4 +65,6 @@ npm run dev
 
 ---
 
-Feito por [Pedro Miguel](https://github.com/p-dromiguel)
+Algumas frases você lê. Outras te leem.
+
+---
