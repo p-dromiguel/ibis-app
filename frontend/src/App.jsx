@@ -1,13 +1,17 @@
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { isAuthenticated } from './api/api';
 import Login from './pages/Login.jsx';
 import Register from './pages/Register.jsx';
 import Feed from './pages/Feed.jsx';
+import Share from './pages/Share.jsx';
 
-// Componente que protege rotas — redireciona pro login se não autenticado
+// Protege rotas — se não autenticado, manda pro login preservando o destino
+// (a /share precisa voltar com os mesmos query params depois do login).
 function ProtectedRoute({ children }) {
+  const location = useLocation();
   if (!isAuthenticated()) {
-    return <Navigate to="/login" replace />;
+    const next = encodeURIComponent(location.pathname + location.search);
+    return <Navigate to={`/login?next=${next}`} replace />;
   }
   return children;
 }
@@ -23,6 +27,14 @@ export default function App() {
           element={
             <ProtectedRoute>
               <Feed />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/share"
+          element={
+            <ProtectedRoute>
+              <Share />
             </ProtectedRoute>
           }
         />

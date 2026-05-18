@@ -2,7 +2,9 @@ import { useMemo, useState } from 'react';
 import { PRESET_TAGS, normalizeTag } from '../constants/tags.js';
 
 export default function PhraseForm({ onSubmit, onCancel, initialPhrase, allPhrases = [] }) {
-  const isEditing = !!initialPhrase;
+  // Edição é só quando o initialPhrase tem id — assim a tela /share pode
+  // pré-preencher o form sem o botão virar "Salvar alterações".
+  const isEditing = !!initialPhrase?.id;
   const [text, setText] = useState(initialPhrase?.text || '');
   const [author, setAuthor] = useState(initialPhrase?.author || '');
   const [source, setSource] = useState(initialPhrase?.source || '');

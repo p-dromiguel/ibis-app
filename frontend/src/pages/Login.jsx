@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, useSearchParams, Link } from 'react-router-dom';
 import { login } from '../api/api';
 import IbisMark from '../components/IbisMark';
 
@@ -9,6 +9,10 @@ export default function Login() {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  // ?next= é setado pelo ProtectedRoute pra preservar a rota original
+  // (ex: usuário compartilhou texto pro app e caiu no login antes da /share).
+  const next = searchParams.get('next') || '/';
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -17,7 +21,7 @@ export default function Login() {
 
     try {
       await login(email, password);
-      navigate('/');
+      navigate(next, { replace: true });
     } catch (err) {
       setError(err.message);
     } finally {
