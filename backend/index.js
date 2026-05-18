@@ -4,6 +4,7 @@ require('dotenv').config();
 
 const authRoutes = require('./routes/auth');
 const phrasesRoutes = require('./routes/phrases');
+const prisma = require('./db/connection');
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -17,6 +18,18 @@ app.use(express.json());
 // Rota de teste — serve pra verificar se o servidor está rodando
 app.get('/', (req, res) => {
   res.json({ message: 'API do App de Frases está rodando! 🚀' });
+});
+
+// Healthcheck — toca no banco pra manter Render + Neon acordados juntos.
+// Aponte o UptimeRobot pra esta rota (não pra /).
+app.get('/health', async (req, res) => {
+  try {
+    await prisma.$queryRaw`SELECT 1`;
+    res.json({ status: 'ok', db: 'up' });
+  } catch (err) {
+    console.error('Healthcheck falhou:', err);
+    res.status(503).json({ status: 'degraded', db: 'down' });
+  }
 });
 
 // Rotas da aplicação
